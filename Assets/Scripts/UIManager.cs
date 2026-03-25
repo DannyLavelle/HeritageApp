@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,7 +15,8 @@ public class UIManager : MonoBehaviour
     public GameObject questionPanel;
     public Text questionText;
     public InputField answerInput;
-
+    public GameObject cluePanel;
+    public TextMeshProUGUI clueText;
     private System.Action onCloseClicked;
 
     public void ShowClosePopup(System.Action onClick)
@@ -43,6 +45,14 @@ public class UIManager : MonoBehaviour
     public void ShowBadge(string badgeName)
     {
         Debug.Log("Awarded badge: " + badgeName);
+    }
+
+    public void ShowClue(string text)
+    {
+        cluePanel.SetActive(true);
+        clueText.text = text;
+
+        Debug.Log("Showing clue: " + text);
     }
 
 }
