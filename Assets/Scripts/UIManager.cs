@@ -18,7 +18,7 @@ public class UIManager : MonoBehaviour
     public GameObject cluePanel;
     public TextMeshProUGUI clueText;
     private System.Action onCloseClicked;
-
+    public GameObject mainMenuUI;
     public void ShowClosePopup(System.Action onClick)
     {
         closePopup.SetActive(true);
@@ -51,7 +51,7 @@ public class UIManager : MonoBehaviour
     {
         cluePanel.SetActive(true);
         clueText.text = text;
-
+        mainMenuUI.SetActive(false);
         Debug.Log("Showing clue: " + text);
     }
 

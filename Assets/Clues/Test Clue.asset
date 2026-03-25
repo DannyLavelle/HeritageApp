@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Test Clue
   m_EditorClassIdentifier: 
   clueText: This is a clue for the church
-  latitude: 0
-  longitude: 0
+  latitude: 1.500001
+  longitude: 1.500001
   triggerDistanceMetres: 20
   question: This is a question for the church
   correctAnswer: test
