@@ -29,7 +29,7 @@ public class GPSLocation : MonoBehaviour
 
     IEnumerator Start()
     {
-        // ? REQUEST PERMISSION HERE (your snippet properly placed)
+       
 #if UNITY_ANDROID && !UNITY_EDITOR
         if (!Permission.HasUserAuthorizedPermission(Permission.FineLocation))
         {
