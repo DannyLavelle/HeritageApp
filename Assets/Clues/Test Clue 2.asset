@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3977157f512df34b937463aaa2da06e, type: 3}
   m_Name: Test Clue 2
   m_EditorClassIdentifier: 
-  clueText: 
+  clueText: 'This is a test clue for something else '
   latitude: 0
   longitude: 0
   triggerDistanceMetres: 20
-  question: 
-  correctAnswer: 
-  badgeName: 
+  question: '2nd question '
+  correctAnswer: test
+  badgeName: test2
