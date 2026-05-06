@@ -17,4 +17,6 @@ public class ClueData : ScriptableObject
 
     [Header("Reward")]
     public string badgeName;
+
+   
 }

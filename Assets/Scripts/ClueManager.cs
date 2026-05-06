@@ -1,10 +1,11 @@
 using System.Collections;
 using UnityEngine;
-
+using System.Collections.Generic;
 public class ClueManager : MonoBehaviour
 {
-    public ClueData currentClue;
-
+    private ClueData currentClue;
+    public List<ClueData> ClueList;
+    public List<ClueData> routeList;
     private bool isCloseTriggered = false;
     public double latitude;
     public double longitude;
@@ -41,8 +42,10 @@ public class ClueManager : MonoBehaviour
             Debug.Log("GPS Started");
         }
 
-        Debug.Log("Clue: " + currentClue.clueText);
-        UIManager.Instance.ShowClue(currentClue.clueText);
+
+        routeList = GenerateClueTrail();
+
+        GenerateNextTarget();
 
         StartCoroutine(CheckDistanceLoop());
     }
@@ -63,7 +66,8 @@ public class ClueManager : MonoBehaviour
         if (answer.ToLower() == currentClue.correctAnswer.ToLower())
         {
             Debug.Log("Correct!");
-
+            UIManager.Instance.NextCluePanelShift();
+            GenerateNextTarget();
             UIManager.Instance.ShowBadge(currentClue.badgeName);
         }
         else
@@ -73,21 +77,21 @@ public class ClueManager : MonoBehaviour
     }
     private IEnumerator CheckDistanceLoop()
     {
-        latitude = 53.8008;   
-         longitude = -1.5491;
+        latitude = 53.8008;
+        longitude = -1.5491;
 
         while (true)
         {
-        #if UNITY_EDITOR
-            
-      
+#if UNITY_EDITOR
 
-        #else
+
+
+#else
         // ?? REAL GPS ON DEVICE
         var data = Input.location.lastData;
         latitude = data.latitude;
         longitude = data.longitude;
-        #endif
+#endif
 
             float distance = GPSUtils.GetDistance(
                 latitude,
@@ -106,5 +110,70 @@ public class ClueManager : MonoBehaviour
 
             yield return new WaitForSeconds(2f);
         }
+    }
+
+    private List<ClueData> GenerateClueTrail()
+    {
+        List<ClueData> remaining = new List<ClueData>(ClueList);
+        List<ClueData> route = new List<ClueData>();
+
+        // Start from player position
+        double currentLat = latitude;
+        double currentLon = longitude;
+
+        while (remaining.Count > 0)
+        {
+            ClueData closestClue = null;
+            float closestDistance = float.MaxValue;
+
+            foreach (ClueData clue in remaining)
+            {
+
+                //TODO Check for badge to see if clue has already been implemented 
+
+                float distance = GPSUtils.GetDistance(
+                    currentLat,
+                    currentLon,
+                    clue.latitude,
+                    clue.longitude
+                );
+
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestClue = clue;
+                }
+            }
+
+            // Add closest clue to route
+            route.Add(closestClue);
+
+            // Move "current position" to that clue
+            currentLat = closestClue.latitude;
+            currentLon = closestClue.longitude;
+
+            // Remove from remaining list
+            remaining.Remove(closestClue);
+        }
+
+        Debug.Log("Generated Trail Order:");
+        for (int i = 0; i < route.Count; i++)
+        {
+            Debug.Log($"{i + 1}: {route[i].clueText}");
+        }
+
+        return route;
+    }
+    public ClueData NextClue()
+    {
+        ClueData clue = routeList[0];
+        routeList.RemoveAt(0);
+        return clue;
+    }//gets next clue from top of list then removes that element 
+    public void GenerateNextTarget()
+    {
+        currentClue = NextClue();
+        isCloseTriggered = false;
+        UIManager.Instance.ShowClue(currentClue.clueText);
     }
 }

@@ -11,23 +11,30 @@ public class UIManager : MonoBehaviour
         Instance = this;
     }
 
-    public GameObject closePopup;
+    public GameObject closeToPopup;
     public GameObject questionPanel;
-    public Text questionText;
-    public InputField answerInput;
+    public TextMeshProUGUI questionText;
+    public TMP_InputField answerInput;
+    public GameObject questionTextObject;
+    private GameObject answerInputObject;
     public GameObject cluePanel;
     public TextMeshProUGUI clueText;
     private System.Action onCloseClicked;
     public GameObject mainMenuUI;
+    private void Start()
+    {
+        
+    }
     public void ShowClosePopup(System.Action onClick)
     {
-        closePopup.SetActive(true);
+        closeToPopup.SetActive(true);
+        cluePanel.SetActive(false);
         onCloseClicked = onClick;
     }
 
     public void OnClosePopupButton()
     {
-        closePopup.SetActive(false);
+        closeToPopup.SetActive(false);
         onCloseClicked?.Invoke();
     }
 
@@ -53,6 +60,11 @@ public class UIManager : MonoBehaviour
         clueText.text = text;
         mainMenuUI.SetActive(false);
         Debug.Log("Showing clue: " + text);
+    }
+    public void NextCluePanelShift()
+    {
+        questionPanel.SetActive(false);
+        cluePanel.SetActive(false);
     }
 
 }
