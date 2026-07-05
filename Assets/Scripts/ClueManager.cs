@@ -57,7 +57,9 @@ public class ClueManager : MonoBehaviour
         // Show popup UI
         UIManager.Instance.ShowClosePopup(() =>
         {
-            UIManager.Instance.ShowQuestion(currentClue);
+            //UIManager.Instance.ShowQuestion(currentClue);
+            UIManager.Instance.ShowPuzzle(currentClue);
+
         });
     }
 

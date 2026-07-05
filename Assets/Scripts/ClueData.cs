@@ -18,5 +18,14 @@ public class ClueData : ScriptableObject
     [Header("Reward")]
     public string badgeName;
 
-   
+    [Header("Puzzle Type")]
+    public PuzzleType puzzleType;
+
+    // Timeline
+    public string[] timelineEvents;
+
+    // Multiple Choice
+    public string[] options;
+    public int correctOptionIndex;
+
 }

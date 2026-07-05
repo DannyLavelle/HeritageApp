@@ -23,7 +23,7 @@ public class UIManager : MonoBehaviour
     public GameObject mainMenuUI;
     private void Start()
     {
-        
+
     }
     public void ShowClosePopup(System.Action onClick)
     {
@@ -42,6 +42,28 @@ public class UIManager : MonoBehaviour
     {
         questionPanel.SetActive(true);
         questionText.text = clue.question;
+    }
+    public void ShowDragAndDropQuestion(ClueData clue)
+    {
+        questionPanel.SetActive(true);
+        questionText.text = clue.question;
+
+        //TODO Implement Drag and Drop support 
+    }
+    public void ShowPuzzle(ClueData clue)
+    {
+        switch (clue.puzzleType)
+        {
+            case PuzzleType.TextAnswer:
+            ShowQuestion(clue);
+            break;
+
+            case PuzzleType.DragAndDrop:
+            ShowDragAndDropQuestion(clue);
+            break;
+
+            
+        }
     }
 
     public void SubmitAnswer()
