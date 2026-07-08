@@ -77,6 +77,72 @@ public class ClueManager : MonoBehaviour
             Debug.Log("Wrong answer");
         }
     }
+
+    public void CheckCurrentPuzzle()
+    {
+        switch (currentClue.puzzleType)
+        {
+            case PuzzleType.TextAnswer:
+            CheckTextAnswer();
+            break;
+
+
+            case PuzzleType.DragAndDrop:
+            CheckTimelineAnswer();
+            break;
+
+
+            //case PuzzleType.MultipleChoice:
+            ////CheckMultipleChoiceAnswer();
+            //break;
+
+
+            //case PuzzleType.PhotoTask:
+            ////CheckPhotoAnswer();
+            //break;
+        }
+    }
+    public void PuzzleCompleted()
+    {
+        Debug.Log("Correct!");
+
+        UIManager.Instance.ShowBadge(currentClue.badgeName);
+
+        UIManager.Instance.NextCluePanelShift();
+
+        GenerateNextTarget();
+    }
+
+    private void CheckTextAnswer()
+    {
+        string answer = UIManager.Instance.answerInput.text;
+
+
+        if (answer.ToLower() == currentClue.correctAnswer.ToLower())
+        {
+            PuzzleCompleted();
+        }
+        else
+        {
+            Debug.Log("Wrong answer");
+        }
+    }
+
+    private void CheckTimelineAnswer()
+    {
+        bool correct =
+            UIManager.Instance.timelinePuzzle.CheckAnswer();
+
+
+        if (correct)
+        {
+            PuzzleCompleted();
+        }
+        else
+        {
+            Debug.Log("Wrong timeline");
+        }
+    }
     private IEnumerator CheckDistanceLoop()
     {
         latitude = 53.8008;
@@ -177,5 +243,11 @@ public class ClueManager : MonoBehaviour
         currentClue = NextClue();
         isCloseTriggered = false;
         UIManager.Instance.ShowClue(currentClue.clueText);
+    }
+
+    public void DebugLocation()
+    {
+        longitude = currentClue.longitude;
+        latitude = currentClue.latitude;
     }
 }

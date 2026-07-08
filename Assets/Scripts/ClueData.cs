@@ -21,11 +21,12 @@ public class ClueData : ScriptableObject
     [Header("Puzzle Type")]
     public PuzzleType puzzleType;
 
-    // Timeline
-    public string[] timelineEvents;
+
 
     // Multiple Choice
     public string[] options;
     public int correctOptionIndex;
+
+    public TimelineEvent[] timelineEvents;
 
 }

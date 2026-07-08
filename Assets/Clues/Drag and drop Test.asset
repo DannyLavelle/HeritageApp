@@ -10,12 +10,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d3977157f512df34b937463aaa2da06e, type: 3}
-  m_Name: Test Clue
+  m_Name: Drag and drop Test
   m_EditorClassIdentifier: 
-  clueText: This is a clue for the church
+  clueText: Knowledge is the key to all things..
   latitude: 1.500001
   longitude: 1.500001
   triggerDistanceMetres: 20
-  question: This is a question for the church
+  question: Arrange
   correctAnswer: test
   badgeName: Church Badge
+  puzzleType: 1
+  options: []
+  correctOptionIndex: 0
+  timelineEvents:
+  - title: Test 0
+    description: ' Test 0'
+    correctPosition: 0
+  - title: Test 1
+    description: Test 1
+    correctPosition: 1
+  - title: Test 2
+    description: Test 2
+    correctPosition: 2
+  - title: Test 3
+    description: Test 3
+    correctPosition: 3

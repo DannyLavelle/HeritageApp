@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using TMPro;
+using UnityEditor.Timeline;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,16 +13,35 @@ public class UIManager : MonoBehaviour
         Instance = this;
     }
 
+   
+    [Header("Panels")]
     public GameObject closeToPopup;
     public GameObject questionPanel;
+    public GameObject cluePanel;
+    public GameObject mainMenuUI;
+
+
+    [Header("Question UI")]
     public TextMeshProUGUI questionText;
     public TMP_InputField answerInput;
     public GameObject questionTextObject;
     private GameObject answerInputObject;
-    public GameObject cluePanel;
+
+
+    [Header("Clue UI")]
     public TextMeshProUGUI clueText;
+
+
+    [Header("Timeline / Drag & Drop")]
+    [SerializeField] private TimelineSlot slotPrefab;
+    [SerializeField] private Transform slotContainer;
+    [SerializeField] private TimelineNode nodePrefab;
+    [SerializeField] private Transform nodeContainer;
+    private List<TimelineSlot> currentSlots = new List<TimelineSlot>();
+    public TimelinePuzzle timelinePuzzle;
+
+    [Header("Internal State")]
     private System.Action onCloseClicked;
-    public GameObject mainMenuUI;
     private void Start()
     {
 
@@ -48,7 +69,53 @@ public class UIManager : MonoBehaviour
         questionPanel.SetActive(true);
         questionText.text = clue.question;
 
-        //TODO Implement Drag and Drop support 
+        answerInput.gameObject.SetActive(false);
+
+
+        // Clear old puzzle objects
+        foreach (Transform child in nodeContainer)
+        {
+            Destroy(child.gameObject);
+        }
+
+        foreach (Transform child in slotContainer)
+        {
+            Destroy(child.gameObject);
+        }
+
+
+        // Create a copy of events
+        List<TimelineEvent> shuffledEvents =
+            new List<TimelineEvent>(clue.timelineEvents);
+
+
+        // Shuffle events
+        for (int i = shuffledEvents.Count - 1; i > 0; i--)
+        {
+            int randomIndex = Random.Range(0, i + 1);
+
+            TimelineEvent temp = shuffledEvents[i];
+            shuffledEvents[i] = shuffledEvents[randomIndex];
+            shuffledEvents[randomIndex] = temp;
+        }
+
+
+        // Generate matching slots and nodes
+        foreach (TimelineEvent entry in shuffledEvents)
+        {
+            // Create slot
+            TimelineSlot slot =
+                Instantiate(slotPrefab, slotContainer);
+            currentSlots.Add(slot);
+
+
+            // Create node
+            TimelineNode node =
+                Instantiate(nodePrefab, nodeContainer);
+
+
+            node.Initialise(entry);
+        }
     }
     public void ShowPuzzle(ClueData clue)
     {
