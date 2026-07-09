@@ -1,19 +1,30 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class TimelineSlot : MonoBehaviour
+public class TimelineSlot : MonoBehaviour, IDropHandler
 {
     public TimelineNode placedNode;
 
-    public bool IsOccupied()
+    public void OnDrop(PointerEventData eventData)
     {
-        return placedNode != null;
-    }
+        TimelineNode node = eventData.pointerDrag.GetComponent<TimelineNode>();
 
-    public void PlaceNode(TimelineNode node)
-    {
+        if (node == null)
+            return;
+
+        if (placedNode != null)
+            return;
+
+        // Remove the node from its previous slot
+        if (node.currentSlot != null)
+        {
+            node.currentSlot.placedNode = null;
+        }
+
         placedNode = node;
+        node.currentSlot = this;
 
         node.transform.SetParent(transform);
-        node.transform.position = transform.position;
+        node.transform.localPosition = Vector3.zero;
     }
 }

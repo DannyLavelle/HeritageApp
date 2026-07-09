@@ -17,7 +17,7 @@ public class TimelinePuzzle : MonoBehaviour
             }
 
             // Wrong position
-            if (slots[i].placedNode.EventData.correctPosition != i)
+            if (slots[i].placedNode.eventData.correctPosition != i)
             {
                 Debug.Log("Wrong order");
                 return false;

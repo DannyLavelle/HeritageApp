@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8039965767863257065}
   - component: {fileID: 1722543196069639870}
+  - component: {fileID: 5581246712159278744}
   m_Layer: 0
   m_Name: TimelineNode
   m_TagString: Untagged
@@ -50,10 +51,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22dbb7e9f266f0f47a7f57bcc0c92056, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EventData:
+  eventData:
     title: 
     description: 
     correctPosition: 0
+  canvas: {fileID: 0}
+--- !u!225 &5581246712159278744
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1510284831701727164}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1590069499821256520
 GameObject:
   m_ObjectHideFlags: 0
