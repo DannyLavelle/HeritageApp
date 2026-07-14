@@ -55,6 +55,8 @@ MonoBehaviour:
     title: 
     description: 
     correctPosition: 0
+  currentSlot: {fileID: 0}
+  titleText: {fileID: 5737605581317309322}
   canvas: {fileID: 0}
 --- !u!225 &5581246712159278744
 CanvasGroup:

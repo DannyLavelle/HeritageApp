@@ -150,6 +150,11 @@ public class ClueManager : MonoBehaviour
 
         while (true)
         {
+            if (currentClue == null)
+            {
+                yield break;
+            }
+
 #if UNITY_EDITOR
 
 
@@ -234,14 +239,40 @@ public class ClueManager : MonoBehaviour
     }
     public ClueData NextClue()
     {
+        if (routeList.Count == 0)
+        {
+            Debug.Log("Trail complete!");
+            return null;
+        }
+
         ClueData clue = routeList[0];
         routeList.RemoveAt(0);
+
         return clue;
-    }//gets next clue from top of list then removes that element 
+    }
+    //public void GenerateNextTarget()
+    //{
+    //    currentClue = NextClue();
+    //    isCloseTriggered = false;
+    //    UIManager.Instance.ShowClue(currentClue.clueText);
+    //}
     public void GenerateNextTarget()
     {
         currentClue = NextClue();
+
+        if (currentClue == null)
+        {
+            Debug.Log("Trail Complete!");
+
+            // TODO
+            // Show end screen
+            // Final anagram
+            // Treasure
+            return;
+        }
+
         isCloseTriggered = false;
+
         UIManager.Instance.ShowClue(currentClue.clueText);
     }
 

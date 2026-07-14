@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -9,6 +10,7 @@ public class TimelineNode : MonoBehaviour,
     public TimelineEvent eventData;
     public TimelineSlot currentSlot;
 
+    [SerializeField] private TMP_Text titleText;
     [SerializeField] private Canvas canvas;
 
     private RectTransform rectTransform;
@@ -28,6 +30,7 @@ public class TimelineNode : MonoBehaviour,
     public void Initialise(TimelineEvent data)
     {
         eventData = data;
+        titleText.text = data.title;
     }
 
     public void OnBeginDrag(PointerEventData eventData)

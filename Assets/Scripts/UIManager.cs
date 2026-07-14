@@ -62,6 +62,7 @@ public class UIManager : MonoBehaviour
     public void ShowQuestion(ClueData clue)
     {
         questionPanel.SetActive(true);
+        answerInput.gameObject.SetActive(true);
         questionText.text = clue.question;
     }
     public void ShowDragAndDropQuestion(ClueData clue)
@@ -135,7 +136,8 @@ public class UIManager : MonoBehaviour
 
     public void SubmitAnswer()
     {
-        FindFirstObjectByType<ClueManager>().SubmitAnswer(answerInput.text);
+        //FindFirstObjectByType<ClueManager>().SubmitAnswer(answerInput.text);
+        FindFirstObjectByType<ClueManager>().CheckCurrentPuzzle();
     }
 
     public void ShowBadge(string badgeName)
