@@ -9,6 +9,7 @@ public class ClueManager : MonoBehaviour
     private bool isCloseTriggered = false;
     public double latitude;
     public double longitude;
+    public bool useDebugLocation = false;
     public void StartTrail()
     {
         Debug.Log("Trail Started!");
@@ -155,16 +156,14 @@ public class ClueManager : MonoBehaviour
                 yield break;
             }
 
-#if UNITY_EDITOR
-
-
-
-#else
-        // ?? REAL GPS ON DEVICE
-        var data = Input.location.lastData;
-        latitude = data.latitude;
-        longitude = data.longitude;
-#endif
+        #if !UNITY_EDITOR
+        if (!useDebugLocation)
+        {
+            var data = Input.location.lastData;
+            latitude = data.latitude;
+            longitude = data.longitude;
+        }
+        #endif
 
             float distance = GPSUtils.GetDistance(
                 latitude,
@@ -278,7 +277,11 @@ public class ClueManager : MonoBehaviour
 
     public void DebugLocation()
     {
-        longitude = currentClue.longitude;
+        useDebugLocation = true;
+
         latitude = currentClue.latitude;
+        longitude = currentClue.longitude;
+
+        Debug.Log("Using debug location");
     }
 }
