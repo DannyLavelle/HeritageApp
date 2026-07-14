@@ -16,7 +16,7 @@ MonoBehaviour:
   latitude: 1.500001
   longitude: 1.500001
   triggerDistanceMetres: 20
-  question: Arrange
+  question: Arrange 2
   correctAnswer: test
   badgeName: Church Badge
   puzzleType: 1
